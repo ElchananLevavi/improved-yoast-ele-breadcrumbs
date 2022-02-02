@@ -70,18 +70,6 @@ class Plugin {
 		$widgets_manager->register_widget_type( new Widgets\Improved_Breadcrumbs() );
 	}
 
-	/**
-	 * Filter yoast breadcrumbs seperator
-	 *
-	 * Add css class to seperator and add Li's for better structure.
-	 *
-	 * @since  1.0
-	 * @access public
-	 *
-	 */
-    public function filter_wpseo_breadcrumb_separator($this_options_breadcrumbs_sep) {
-        return '</li><li><span class="separator">' . $this_options_breadcrumbs_sep . '</span>';
-    }
     
 	/**
 	 *  Plugin class constructor
@@ -94,8 +82,7 @@ class Plugin {
 	public function __construct() {
 		// Register widgets
 		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
-        // Seperator modify
-        add_action( 'wpseo_breadcrumb_separator', [ $this, 'filter_wpseo_breadcrumb_separator' ] );
+
 	}
 }
 

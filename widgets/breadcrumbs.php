@@ -93,20 +93,34 @@ class Improved_Breadcrumbs extends Breadcrumbs {
         return $link_output;
     }
 
+    /**
+	 * Filter yoast breadcrumbs seperator
+	 *
+	 * Add css class to seperator and add Li's for better structure.
+	 *
+	 */
+    public function filter_wpseo_breadcrumb_separator($this_options_breadcrumbs_sep) {
+        return '</li><li><span class="separator">' . $this_options_breadcrumbs_sep . '</span>';
+    }
+
     protected function render() {
      
         if ($this->get_settings( 'remove_current_page') === 'yes' ) { 
             add_action( 'wpseo_breadcrumb_single_link', [ $this, 'breadcrumbs_remove_last' ] );
         }
 
+        add_action( 'wpseo_breadcrumb_separator', [ $this, 'filter_wpseo_breadcrumb_separator' ] );
+
+
         if ( class_exists( '\WPSEO_Breadcrumbs' ) ) {
             $html_tag = $this->get_html_tag();
             WPSEO_Breadcrumbs::breadcrumb( '<' . $html_tag . ' id="breadcrumbs" aria-label="Breadcrumb"><ul><li>', '</li></ul></' . $html_tag . '>' );
         }
         echo '<style>
-        #breadcrumbs ul {padding: 0; list-style: none;} li {display: inline;} 
-        .remove-current-page-yes.shorten-breadcrumbs-always li:not(:last-child){ display: none; }
-        .shorten-breadcrumbs-always:not(.remove-current-page-yes) li:nth-last-child(n+3){ display: none; }
+        #breadcrumbs ul {padding: 0; list-style: none;} 
+        #breadcrumbs li {display: inline;} 
+        .remove-current-page-yes.shorten-breadcrumbs-always #breadcrumbs li:not(:last-child){ display: none; }
+        .shorten-breadcrumbs-always:not(.remove-current-page-yes) #breadcrumbs li:nth-last-child(n+3){ display: none; }
         .flip-separator-yes .separator { display: inline-block; -webkit-transform: scaleX(-1);  transform: scaleX(-1); }
         @media(max-width:767px){
             .remove-current-page-yes.shorten-breadcrumbs-on_mobile li:not(:last-child){ display: none; }
