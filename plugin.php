@@ -82,7 +82,6 @@ class Plugin {
 	public function __construct() {
 		// Register widgets
 		add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
-
 	}
 }
 

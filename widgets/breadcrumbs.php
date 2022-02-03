@@ -72,6 +72,19 @@ class Improved_Breadcrumbs extends Breadcrumbs {
 				
 			]
 		);
+
+        $this->add_control(
+            'link_prefix',
+            [
+                'type' => Controls_Manager::TEXT,
+                'label' => esc_html__( 'Single link prefix', 'improved-breadcrumbs' ),
+                'placeholder' => esc_html__( 'Enter your prefix', 'plugin-name' ),
+                'condition' => [
+					'show_only_one_level!' => 'no',
+				],
+            ]
+        );
+
 		$this->end_injection();
 	}
 
@@ -100,7 +113,12 @@ class Improved_Breadcrumbs extends Breadcrumbs {
 	 *
 	 */
     public function filter_wpseo_breadcrumb_separator($this_options_breadcrumbs_sep) {
-        return '</li><li><span class="separator">' . $this_options_breadcrumbs_sep . '</span>';
+        $link_prefix = '';
+        if ($this->get_settings( 'link_prefix') !== 'no' ) { 
+            $link_prefix = '<span class="link-prefix">' .$this->get_settings( 'link_prefix') . '</span>' ;
+        }
+
+        return '</li><li><span class="separator">' . $this_options_breadcrumbs_sep . '</span>' . $link_prefix;
     }
 
     protected function render() {
@@ -110,7 +128,6 @@ class Improved_Breadcrumbs extends Breadcrumbs {
         }
 
         add_action( 'wpseo_breadcrumb_separator', [ $this, 'filter_wpseo_breadcrumb_separator' ] );
-
 
         if ( class_exists( '\WPSEO_Breadcrumbs' ) ) {
             $html_tag = $this->get_html_tag();
@@ -122,9 +139,14 @@ class Improved_Breadcrumbs extends Breadcrumbs {
         .remove-current-page-yes.shorten-breadcrumbs-always #breadcrumbs li:not(:last-child){ display: none; }
         .shorten-breadcrumbs-always:not(.remove-current-page-yes) #breadcrumbs li:nth-last-child(n+3){ display: none; }
         .flip-separator-yes .separator { display: inline-block; -webkit-transform: scaleX(-1);  transform: scaleX(-1); }
+        .link-prefix { padding-left: 5px; }
+        .rtl .link-prefix { padding-right: 5px;  padding-left: 0; }
+        @media(min-width:768px){
+            .shorten-breadcrumbs-on_mobile .link-prefix { display: none; }
+        }
         @media(max-width:767px){
-            .remove-current-page-yes.shorten-breadcrumbs-on_mobile li:not(:last-child){ display: none; }
-            .shorten-breadcrumbs-on_mobile:not(.remove-current-page-yes) li:nth-last-child(n+3){ display: none; }
+            .remove-current-page-yes.shorten-breadcrumbs-on_mobile #breadcrumbs li:not(:last-child){ display: none; }
+            .shorten-breadcrumbs-on_mobile:not(.remove-current-page-yes) #breadcrumbs li:nth-last-child(n+3){ display: none; }
         }
         </style>';
     }
