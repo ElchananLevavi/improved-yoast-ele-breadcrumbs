@@ -80,6 +80,7 @@ class Improved_Breadcrumbs extends Breadcrumbs {
                 'label' => esc_html__( 'Single link prefix', 'improved-breadcrumbs' ),
                 'placeholder' => esc_html__( 'Enter your prefix', 'plugin-name' ),
                 'condition' => [
+                    'remove_current_page' => 'yes',
 					'show_only_one_level!' => 'no',
 				],
             ]
@@ -114,7 +115,7 @@ class Improved_Breadcrumbs extends Breadcrumbs {
 	 */
     public function filter_wpseo_breadcrumb_separator($this_options_breadcrumbs_sep) {
         $link_prefix = '';
-        if ($this->get_settings( 'link_prefix') !== 'no' ) { 
+        if ($this->get_settings( 'link_prefix') !== 'no' && $this->get_settings( 'remove_current_page') === 'yes' && $this->get_settings( 'show_only_one_level') !== 'no') { 
             $link_prefix = '<span class="link-prefix">' .$this->get_settings( 'link_prefix') . '</span>' ;
         }
 
