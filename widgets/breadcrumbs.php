@@ -135,6 +135,7 @@ class Improved_Breadcrumbs extends Breadcrumbs {
             $html_tag = $this->get_html_tag();
             WPSEO_Breadcrumbs::breadcrumb( '<' . $html_tag . ' id="breadcrumbs" aria-label="Breadcrumb"><ul><li>', '</li></ul></' . $html_tag . '>' );
         }
+        
         echo '<style>
         #breadcrumbs ul {padding: 0; list-style: none;} 
         #breadcrumbs li {display: inline;} 
