@@ -78,7 +78,7 @@ class Improved_Breadcrumbs extends Breadcrumbs {
             [
                 'type' => Controls_Manager::TEXT,
                 'label' => esc_html__( 'Single link prefix', 'improved-breadcrumbs' ),
-                'placeholder' => esc_html__( 'Enter your prefix', 'plugin-name' ),
+                'placeholder' => esc_html__( 'Enter your link prefix', 'improved-breadcrumbs' ),
                 'condition' => [
                     'remove_current_page' => 'yes',
 					'show_only_one_level!' => 'no',
