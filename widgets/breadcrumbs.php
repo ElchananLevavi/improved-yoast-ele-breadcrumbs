@@ -83,10 +83,11 @@ class Improved_Breadcrumbs extends Breadcrumbs {
                     'remove_current_page' => 'yes',
 					'show_only_one_level!' => 'no',
 				],
-            ]
+            ] 
         );
 
 		$this->end_injection();
+        
 	}
 
     private function get_html_tag() {
